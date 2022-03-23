@@ -2,10 +2,10 @@ FROM alpine:3.6
 MAINTAINER Johan Swetzén <johan@swetzen.com>
 
 ENV REMOTE_HOSTNAME="" \
-    BACKUPDIR="/home" \
+    BACKUPDIR="/origen" \
     SSH_PORT="22" \
     SSH_IDENTITY_FILE="/root/.ssh/id_rsa" \
-    ARCHIVEROOT="/backup" \
+    ARCHIVEROOT="/destino" \
     EXCLUDES="" \
     CRON_TIME="0 1 * * *"
 
