@@ -7,9 +7,25 @@ services:
       - PUID=1000
       - PGID=998
       - TZ=Europe/Madrid
+      - SSH_IDENTITY_FILE=/home/joseka/.ssh/id_rsa.pub
+      - BACKUPDIR=joseka@136.243.153.54:/docker
     volumes:
-      - ./origen:/origen # origen de los archivos
-      - ./destino:/destino # destino del backup
-    mem_limit: 1240M
-    mem_reservation: 256M 
+      - /docker/homer:/home  # origen de los archivos
+      - ./destino:/backup  # destino del backup
+    mem_limit: 1014M
+    mem_reservation: 128M 
     restart: unless-stopped
+
+
+docker run -d --name rsync-backup22 \
+  --volume /docker:/backup \
+  --volume /docker/homer:/home \
+  --env SSH_IDENTITY_FILE=/home/joseka/.ssh/id_rsa.pub \
+  --env BACKUPDIR=joseka@136.243.153.54:/docker \
+  jswetzen/rsync-backup
+
+
+
+  rsync -av -e -P 'ssh -t' joseka@136.243.153.54:/docker/ /docker/comprimidos/ 
+
+    rsync -av -e -P ssh joseka@136.243.153.54:.ssh
